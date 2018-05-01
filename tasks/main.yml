@@ -1,6 +1,6 @@
 ---
 # tasks file for rm.cowrie
-- name: Installing dependencies for cowrie
+- name: Installing Dependencies For Cowrie
   apt: name="{{ item }}" state=latest update_cache=yes cache_valid_time=600
   with_items:
     - git
@@ -12,15 +12,15 @@
     - python2.7-minimal
     - authbind
 
-- name: Creating cowrie user
+- name: Creating Cowrie User
   user: name="{{ cowrie_user }}" home="{{ cowrie_home }}" shell="/bin/bash"
 
-- name: Clone the Cowrie Git repo
+- name: Clone Cowrie Git Repository
   become: yes
   become_user: "{{ cowrie_user }}"
   git: repo="{{ cowrie_repo }}" dest="{{ cowrie_root }}" force=yes
 
-- name: Install pip deps in venv
+- name: Install Python Dependencies via PIP
   become: yes
   become_user: "{{ cowrie_user }}"
   pip: virtualenv="{{ cowrie_venv }}" name="{{ item }}"
@@ -38,20 +38,20 @@
     - python-dateutil
     - tftpy
 
-- name: Install systemd service file
+- name: Install Cowrie SystemD Service
   template: src=cowrie.service.j2 dest=/etc/systemd/system/cowrie.service
   notify:
     - reload systemctl
     - restart cowrie
 
-- name: Deploy cowrie config file
+- name: Deploy Cowrie Config
   become: yes
   become_user: "{{ cowrie_user }}"
   template: src=cowrie.cfg.j2 dest="{{ cowrie_root }}/cowrie.cfg"
   notify:
     - restart cowrie
 
-- name: Deploy cowrie userdb
+- name: Deploy Cowrie UserDB
   become: yes
   become_user: "{{ cowrie_user }}"
   file: src=userdb.txt.j2 dest="{{ cowrie_root }}/data/userdb.txt"
