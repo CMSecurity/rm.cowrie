@@ -1,0 +1,41 @@
+---
+# defaults file for rm.cowrie
+
+  cowrie_user: hp
+  cowrie_home: /opt/cowrie
+  cowrie_repo: https://github.com/micheloosterhof/cowrie
+  cowrie_root: "{{ cowrie_home }}/hp"
+  cowrie_venv_name: "venv"
+  cowrie_venv: "{{ cowrie_root }}/{{ cowrie_venv_name }}"
+  cowrie_redirect_ports: yes
+
+  # cowrie.cfg - honeypot
+  cowrie_hostname: svr04
+  cowrie_fs_pickle: data/fs.pickle
+  cowrie_ttylog: false
+  cowrie_auth_class: UserDB
+
+  #cowrie.cfg - shell
+  cowrie_shell_arch: linux-x64-lsb
+
+  # cowrie.cfg - ssh
+  cowrie_ssh_enabled: true
+  cowrie_version_string: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
+  cowrie_ssh_listen: tcp:2222:interface=0.0.0.0
+  cowrie_sftp_enabled: true
+  cowrie_forwarding: false
+  cowrie_forward_redirect: false
+
+  # cowrie.cfg - telnet
+  cowrie_telnet_enabled: true
+  cowrie_telnet_listen_endpoints: tcp:2223:interface=0.0.0.0
+  cowrie_telnet_reported_port: 23
+
+  #cowrie.cfg - output_jsonlog
+  cowrie_jsonlog_logfile: log/cowrie.json
+
+  #cowrie.cfg - output_virustotal
+  cowrie_vt_enabled: false
+  cowrie_vt_api_key: setMe
+  cowrie_vt_upload: false
+  cowrie_vt_debug: false

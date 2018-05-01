@@ -1,0 +1,59 @@
+---
+# tasks file for rm.cowrie
+- name: Installing dependencies for cowrie
+  apt: name="{{ item }}" state=latest update_cache=yes cache_valid_time=600
+  with_items:
+    - git
+    - python-virtualenv
+    - libssl-dev
+    - libffi-dev
+    - build-essential
+    - libpython-dev
+    - python2.7-minimal
+    - authbind
+
+- name: Creating cowrie user
+  user: name="{{ cowrie_user }}" home="{{ cowrie_home }}" shell="/bin/bash"
+
+- name: Clone the Cowrie Git repo
+  become: yes
+  become_user: "{{ cowrie_user }}"
+  git: repo="{{ cowrie_repo }}" dest="{{ cowrie_root }}" force=yes
+
+- name: Install pip deps in venv
+  become: yes
+  become_user: "{{ cowrie_user }}"
+  pip: virtualenv="{{ cowrie_venv }}" name="{{ item }}"
+  with_items: 
+    - twisted>=17.1.0
+    - cryptography>=0.9.1
+    - configparser
+    - pyopenssl
+    - pyparsing
+    - packaging
+    - appdirs>=1.4.0
+    - pyasn1_modules
+    - attrs
+    - service_identity
+    - python-dateutil
+    - tftpy
+
+- name: Install systemd service file
+  template: src=cowrie.service.j2 dest=/etc/systemd/system/cowrie.service
+  notify:
+    - reload systemctl
+    - restart cowrie
+
+- name: Deploy cowrie config file
+  become: yes
+  become_user: "{{ cowrie_user }}"
+  template: src=cowrie.cfg.j2 dest="{{ cowrie_root }}/cowrie.cfg"
+  notify:
+    - restart cowrie
+
+- name: Deploy cowrie userdb
+  become: yes
+  become_user: "{{ cowrie_user }}"
+  file: src=userdb.txt.j2 dest="{{ cowrie_root }}/data/userdb.txt"
+  notify:
+    - restart cowrie

@@ -1,0 +1,48 @@
+[honeypot]
+hostname = {{ cowrie_hostname }}
+filesystem_file = {{ cowrie_fs_pickle }}
+ttylog = {{ cowrie_ttylog }}
+auth_class = {{ cowrie_auth_class }}
+reported_ssh_port = 22
+
+[shell]
+arch = {{ cowrie_shell_arch }}
+
+[ssh]
+enabled = {{ cowrie_ssh_enabled }}
+version = {{ cowrie_version_string }}
+listen_endpoints = {{ cowrie_ssh_listen }}
+sftp_enabled = {{ cowrie_sftp_enabled }}
+forwarding = {{ cowrie_forwarding }}
+forward_redirect = {{ cowrie_forward_redirect }}
+
+[telnet]
+enabled = {{ cowrie_telnet_enabled }}
+listen_endpoints = {{ cowrie_telnet_listen_endpoints }}
+reported_port = {{ cowrie_telnet_reported_port }}
+
+[output_jsonlog]
+logfile = {{ cowrie_jsonlog_logfile }}
+
+[output_virustotal]
+enabled = {{ cowrie_vt_enabled }}
+api_key = {{ cowrie_vt_api_key }}
+upload = {{ cowrie_vt_upload }}
+debug = {{ cowrie_vt_debug }}
+
+{% if cowrie_settings is defined %}
+{% if cowrie_settings.honeypot is defined %}
+{% for key,value in cowrie_settings.iteritems() %}
+{{ key }} = {{ value }}
+{% endfor %}
+{% endif %}
+{% for section, settings in cowrie_settings.iteritems() %}
+{% if section != "honeypot" %}
+[{{ section }}]
+{% for key, value in settings.iteritems() %}
+{{ key }} = {{ value }}
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% endif %}

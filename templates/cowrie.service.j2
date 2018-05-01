@@ -1,0 +1,26 @@
+[Unit]
+Description=Cowrie SSH and Telnet Honeypot
+Documentation=https://github.com/micheloosterhof/cowrie
+After=network.target
+Wants=syslog.target
+
+[Service]
+Type=forking
+User={{ cowrie_user }}
+Group={{ cowrie_user }}
+Environment=COWRIE_VIRTUAL_ENV={{ cowrie_venv_name }}
+PIDFile={{ cowrie_root }}/var/run/cowrie.pid
+ExecStart={{ cowrie_root }}/bin/cowrie start
+ExecStop={{ cowrie_root }}/bin/cowrie stop
+ExecReload={{ cowrie_root }}/bin/cowrie stop && sleep 5 && {{ cowrie_root }}/bin/cowrie start
+WorkingDirectory={{ cowrie_root }}
+Restart=on-failure
+TimeoutSec=300
+PermissionsStartOnly=yes
+{% if cowrie_redirect_ports %}
+ExecStartPre=/sbin/iptables -t nat -A PREROUTING -p tcp --dport 22 -j REDIRECT --to-port {{ 2222 }}
+ExecStartPre=/sbin/iptables -t nat -A PREROUTING -p tcp --dport 23 -j REDIRECT --to-port {{ 2223 }}
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target
