@@ -28,7 +28,9 @@ None! :)
 Example Playbook
 ----------------
 
-If only the recommended vars are set, deploying cowrie is really easy:
+If only the recommended vars are set, deploying cowrie is really easy.  
+For usage with splunk as logging target, setting host, port, enabled and token are mandatory.  
+(Splunk Server setup instructions: [Splunk Docs](http://docs.splunk.com/Documentation/Splunk/7.1.0/Data/UsetheHTTPEventCollector) ):
 
     - hosts: servers
       roles:
@@ -36,6 +38,10 @@ If only the recommended vars are set, deploying cowrie is really easy:
           vars: 
             cowrie_hostname: derp04
             cowrie_version_string: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
+            cowrie_splunk_host: splunk.ip.or.fqdn
+            cowrie_splunk_port: 8088
+            cowrie_splunk_enabled: true
+            cowrie_splunk_token: generated-splunk-token-here
 
 If you want to change the default allowed users on your honeypot, modify `templates/userdb.txt`.
 

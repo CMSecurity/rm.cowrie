@@ -36,6 +36,15 @@
 
   #cowrie.cfg - output_virustotal
   cowrie_vt_enabled: false
-  cowrie_vt_api_key: setMe
+  cowrie_vt_api_key: set-me-some-api-key
   cowrie_vt_upload: false
   cowrie_vt_debug: false
+
+  #cowrie.cfg - output_splunk
+  cowrie_splunk_host: splunk.local
+  cowrie_splunk_port: 8088
+  cowrie_splunk_enabled: false
+  cowrie_splunk_url: "https://{{ cowrie_splunk_host }}:{{ cowrie_splunk_port }}/services/collector/event"
+  cowrie_splunk_token: set-me-some-api-key
+  cowrie_splunk_index: main
+  cowrie_splunk_source: cowrie

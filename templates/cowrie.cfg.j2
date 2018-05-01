@@ -30,6 +30,14 @@ api_key = {{ cowrie_vt_api_key }}
 upload = {{ cowrie_vt_upload }}
 debug = {{ cowrie_vt_debug }}
 
+[output_splunk]
+enabled = {{ cowrie_splunk_enabled }}
+url = {{ cowrie_splunk_url }}
+token = {{ cowrie_splunk_token }}
+index = {{ cowrie_splunk_index }}
+source = {{ cowrie_splunk_source }}
+
+
 {% if cowrie_settings is defined %}
 {% if cowrie_settings.honeypot is defined %}
 {% for key,value in cowrie_settings.iteritems() %}
