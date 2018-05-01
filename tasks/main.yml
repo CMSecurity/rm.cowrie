@@ -57,3 +57,8 @@
   file: src=userdb.txt.j2 dest="{{ cowrie_root }}/data/userdb.txt"
   notify:
     - restart cowrie
+
+# This role needs to be installed! Visit https://github.com/RoastingMalware for more infos
+- name: Setting Up Fail2Ban-Jail For Cowrie
+  include_role:
+    name: rm.fail2ban-cowrie
