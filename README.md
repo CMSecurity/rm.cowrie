@@ -4,6 +4,12 @@ rm.cowrie
 A role that sets up cowrie honeypot on a target system.
 This creates a new user, clones cowrie into its' homefolder and installs all needed dependencies in a venv in the cowrie homefolder.
 
+Installation
+------------
+
+To use this repo in your playbook and install it (and all its dependencies) to your roles folder, call:  
+`ansible-galaxy install -p roles git+https://github.com/RoastingMalware/rm.cowrie`
+
 Requirements
 ------------
 
