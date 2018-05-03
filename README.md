@@ -56,7 +56,7 @@ If you want to change the default allowed users on your honeypot, modify `templa
 License
 -------
 
-[Apache License 2.0](https://github.com/RoastingMalware/rm.fail2ban-cowrie/blob/master/LICENSE)
+[Apache License 2.0](https://github.com/RoastingMalware/rm.cowrie/blob/master/LICENSE)
 
 Contributions
 ------------
