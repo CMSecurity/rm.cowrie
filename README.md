@@ -2,7 +2,8 @@ rm.cowrie
 =========
 
 A role that sets up cowrie honeypot on a target system.
-This creates a new user, clones cowrie into its' homefolder and installs all needed dependencies in a venv in the cowrie homefolder.
+This creates a new user, clones cowrie into its' homefolder and installs all needed dependencies in a venv in the cowrie homefolder.  
+Optionally, it can set up cowrie to log its events directly to a given Splunk installation.
 
 Installation
 ------------
@@ -29,7 +30,8 @@ The ttylog, which records all entered commands of a session in UML, has been dis
 Dependencies
 ------------
 
-None! :)
+`rm.fail2ban-cowrie` - This is defined as dependency and will automatically be installed by `ansible-galaxy install`.  
+If not, this role is publicy available [on Github](https://github.com/RoastingMalware/rm.fail2ban-cowrie).
 
 Example Playbook
 ----------------
@@ -42,7 +44,7 @@ For usage with splunk as logging target, setting host, port, enabled and token a
       roles:
         - role: rm.cowrie
           vars: 
-            cowrie_hostname: derp04
+            cowrie_hostname: serv04
             cowrie_version_string: SSH-2.0-OpenSSH_6.0p1 Debian-4+deb7u2
             cowrie_splunk_host: splunk.ip.or.fqdn
             cowrie_splunk_port: 8088
@@ -54,4 +56,10 @@ If you want to change the default allowed users on your honeypot, modify `templa
 License
 -------
 
-Apache
+[Apache License 2.0](https://github.com/RoastingMalware/rm.fail2ban-cowrie/blob/master/LICENSE)
+
+Contributions
+------------
+
+Contributions are more than welcome!  
+If you encounter a bug or want to extend the role, go ahead and open a GitHub Pull Request or Issue :)  
